@@ -1,0 +1,22 @@
+# Ramblings about stuff I do or did
+
+Hi and welcome to my website.  Actually, the first one since half a decade.  Check out some articles I wrote in the last years.  Mainly about BSD but you might find some other stuff as well.
+
+This site is a copy of my HTTP website on the same domain.  I converted all content automatically and tried my best to get rid of all webisms.  If you find errors please contact me.
+
+=> about.gmi About me
+=> bluetooth.gmi Playing Wireless Audio on OpenBSD
+=> contact.gmi How to contact me
+=> enchome.gmi Encrypted HOME directory on a second disk with OpenBSD
+=> mfs.gmi /tmp Partition on Memory Filesystem
+=> pinebookpro.gmi Install OpenBSD 6.7-current on a PineBook Pro 64
+=> sandbox.gmi How to run X Applications as another User
+=> talks.gmi Talks I gave over the years
+=> ttrss.gmi  How to set up Tiny Tiny RSS on OpenBSD
+=> u2fandssh.gmi Using a U2F/FIDO key with OpenSSH
+=> vmm.gmi Running Virtual Machines with VMM on OpenBSD
+=> wireguard.gmi Creating a Wireguard VPN on OpenBSD
+
+This gemini site is powered by vger on OpenBSD.
+
+> $Id: index.gmi,v 1.3 2020/12/25 18:49:20 cvs Exp $

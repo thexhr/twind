@@ -1,0 +1,85 @@
+.\"
+.\" Copyright (c) 2021 Matthias Schmidt
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.\"
+.Dd August 12, 2021
+.Dt TWIND 8
+.Os
+.Sh NAME
+.Nm twind
+.Nd Simple gemini server
+.Sh SYNOPSIS
+.Nm twind
+.Op Fl dfV
+.Op Fl p Ar port
+.Sh DESCRIPTION
+.Nm
+is a simple daemon serving static files over the gemini protocol.
+It is intended to have as few knobs as possible and has no support for
+a configuration file.
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl d
+Enable debug log messages.
+Most useful together with
+.Fl f .
+.It Fl f
+Do not daemonize.
+If this option is specified,
+.Nm
+will run in the foreground and log to
+.Em stderr .
+.It Fl p Ar port
+Listen on Port
+.Ar port
+instead of the default 1965.
+.It Fl V
+Display the version and exit.
+.El
+.Pp
+.Nm
+listens on the any address (:: and 0.0.0.0) for both IPv4 and IPv6.
+.Pp
+.Nm
+has support for virtual hosts by default.
+To serve files for a specific host you have to place them in a sub directory
+named after the domain under
+.Pa /var/twind .
+.Sh FILES
+The following path cannot be changed, i.e. you have to name your
+TLS certificate and key file exactly as shown.
+.Pp
+.Bl -tag -width Ds -compact
+.It Pa /etc/twind/twind.cert.pem
+TLS certificate for
+.Nm
+.It Pa /etc/twind/twind.key.pem
+Private key for the certificate mentioned above.
+.It Pa /var/twind/
+Default location for the gemini (gmi) files.
+Contains one sub directory for each virtual host.
+.It Pa /var/twind/example.com/
+Subdirectory containing gemini files for the
+.Em example.com
+host.
+.El
+.Sh EXIT STATUS
+.Nm
+normally exists with 0 or with -1 if an error occurred.
+.Sh AUTHORS
+.Nm
+was written by
+.An Matthias Schmidt Aq Mt xhr@giessen.ccc.de .
