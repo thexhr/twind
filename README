@@ -28,7 +28,9 @@ installed:
 
 twind needs a dedicated user called '_twind' and directory to run.  The
 Makefile contains a command to create the user.  Note that you shall not change
-the user's name and the directory twind needs!
+the user's name and the directory twind needs!  By default, the user ID for
+_twind is set to 4000.  If you need another user ID, change the UID variable
+in the Makefile.
 
 $ make
 # make install
@@ -44,7 +46,7 @@ under the following locations (which cannot be changed):
 * /etc/twind/twind.key.pem
 
 Either copy your existing keys to these locations or generate a new key and
-certificate via the Makefile.  Note that the command overwrites any existing
+certificate by using the Makefile.  Note that the command overwrites any existing
 key without warning!  To generate both key and certificate use the following
 command and provide the hostname via the HN variable.  If you don't provide the
 hostname the command will fail!
