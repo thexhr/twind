@@ -3,7 +3,17 @@ twind
 
 twind is a simple daemon serving static files over the gemini protocol.  It is
 intended to have as few knobs as possible and has no support for a
-configuration file.
+configuration file.  twind is named after the latin word for gemini - twins.
+
+twind is known to run on OpenBSD, FreeBSD and Linux and currently supports
+
+* Serving static gemini files
+* Virtual hosts
+* MIME handling
+* IPv4 and IPv6 support
+
+It doesn't support CGI handling and probably never will.  There are more
+advanced gemini servers out there if you look for fancy stuff.
 
 Installation
 ------------
@@ -11,7 +21,7 @@ Installation
 twind is written in plain C and you need to have the following software
 installed:
 
-* A C compiler (tested with clang and GCC)
+* A C compiler (tested with clang >= 11 and GCC >= 9)
 * LibreSSL or OpenSSL
 * POSIX compatible libc with pthreads support
 * make (both BSD and GNU make will work)
