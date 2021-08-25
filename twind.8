@@ -14,7 +14,7 @@
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
 .\"
-.Dd August 12, 2021
+.Dd August 25, 2021
 .Dt TWIND 8
 .Os
 .Sh NAME
@@ -58,6 +58,14 @@ has support for virtual hosts by default.
 To serve files for a specific host you have to place them in a sub directory
 named after the domain under
 .Pa /var/twind .
+.Pp
+.Nm
+starts as root and then drops privileges to a dedicated
+_twind user.
+By default, two sub-processes are started jailing themselves with
+.Xr chroot 8
+to
+.Pa /var/twind .
 .Sh FILES
 The following path cannot be changed, i.e. you have to name your
 TLS certificate and key file exactly as shown.
@@ -75,6 +83,8 @@ Contains one sub directory for each virtual host.
 Subdirectory containing gemini files for the
 .Em example.com
 host.
+.It Pa /var/twind/logs/
+Subdirectory containing access and error logs.
 .El
 .Sh EXIT STATUS
 .Nm
