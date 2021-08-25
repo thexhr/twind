@@ -1,2 +1,4 @@
 *.o
 twind
+cscope.*
+tags
