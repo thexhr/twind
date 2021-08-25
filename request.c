@@ -39,8 +39,6 @@ uridecode(const char *request)
 	const char *p;
 	char *pt;
 
-	memset(temp, 0, strlen(request)+1);
-
 	p = request;
 	pt = temp;
 

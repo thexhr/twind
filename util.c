@@ -27,7 +27,7 @@ xmalloc(size_t size)
 
 	if (size == 0)
 		fatal("xmalloc: zero size");
-	ptr = malloc(size);
+	ptr = calloc(1, size);
 	if (ptr == NULL)
 		fatal("xmalloc: out of memory (allocating %zu bytes)", size);
 	return ptr;
