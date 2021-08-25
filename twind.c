@@ -260,7 +260,7 @@ handle_incoming_connections(int counter, int tcpsock, SSL_CTX *sslctx)
 
 		inet_ntop(addr.ss_family, get_in_addr((struct sockaddr *)&addr), str, sizeof(str));
 		strlcpy(cc->client_addr, str, INET6_ADDRSTRLEN);
-		//log_info("Connection from %s", cc->client_addr);
+		log_info("Connection from %s", cc->client_addr);
 
 		if ((cc->ssl_peer = SSL_new(sslctx)) == NULL) {
 			log_warn("Creating new TLS structure failed");
