@@ -168,11 +168,12 @@ main(int argc, char *argv[])
 		fatalx("pledge");
 #endif /* __OpenBSD__ */
 
-	fork_main_process(tcpsock, sslctx);
 
 	if (!fg_flag)
 		if (daemon(0, 0) == -1)
 			fatalx("daemonizing failed");
+
+	fork_main_process(tcpsock, sslctx);
 
 	organize_termination();
 
