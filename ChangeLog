@@ -1,0 +1,6 @@
+* Version 2021.b - still unreleased
+
+- Re-open access and error logs on SIGHUP
+- Change timestamp format for both log files
+- Main process for both handlers is now kept
+- Update man page
