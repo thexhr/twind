@@ -161,17 +161,17 @@ main(int argc, char *argv[])
 	log_init(debug_flag, LOG_DAEMON);
 	log_setverbose(verbose_flag);
 
-	open_twind_logs();
 
 #ifdef __OpenBSD__
-	if (pledge("stdio inet dns proc rpath", NULL) == -1)
+	if (pledge("stdio inet dns proc rpath wpath cpath", NULL) == -1)
 		fatalx("pledge");
 #endif /* __OpenBSD__ */
-
 
 	if (!fg_flag)
 		if (daemon(0, 0) == -1)
 			fatalx("daemonizing failed");
+
+	open_twind_logs();
 
 	fork_main_process(tcpsock, sslctx);
 
@@ -184,6 +184,8 @@ static void
 organize_termination(void)
 {
 	pid_t sub_pid;
+
+	close_twind_logs();
 
 	log_debug("waiting for sub processes to terminate");
 	for (;;) {
@@ -253,7 +255,7 @@ handle_incoming_connections(int counter, int tcpsock, SSL_CTX *sslctx)
 
 #ifdef __OpenBSD__
 	/* We can get rid of proc pledge here */
-	if (pledge("stdio inet dns rpath", NULL) == -1)
+	if (pledge("stdio inet dns rpath wpath cpath", NULL) == -1)
 		fatalx("pledge");
 #endif /* __OpenBSD__ */
 
