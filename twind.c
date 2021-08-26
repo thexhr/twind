@@ -187,6 +187,11 @@ organize_termination(void)
 
 	close_twind_logs();
 
+#ifdef __OpenBSD__
+	if (pledge("stdio", NULL) == -1)
+		fatalx("pledge");
+#endif /* __OpenBSD__ */
+
 	log_debug("waiting for sub processes to terminate");
 	for (;;) {
 		sub_pid = wait(NULL);
