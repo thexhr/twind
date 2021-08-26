@@ -236,33 +236,31 @@ close_twind_logs(void)
 void
 log_access(const struct client_connection *cc, const char *fmt, ...)
 {
+	char tmstr[29];
 	struct tm tm;
 	time_t t;
 
 	t = time(NULL);
 	tm = *localtime(&t);
 
-	user_log(0, "%s - - [%d/%d/%d:%d:%d:%d %s] %s", cc->client_addr,
-			tm.tm_mday, tm.tm_mon, tm.tm_year+1900,
-			tm.tm_hour, tm.tm_min, tm.tm_sec,
-			tm.tm_zone, fmt);
+	strftime(tmstr, sizeof(tmstr), "%d/%b/%Y:%H:%M:%S %Z", &tm);
+
+	user_log(0, "%s - - [%s] %s", cc->client_addr, tmstr, fmt);
 }
 
 void
 log_error(const struct client_connection *cc, const char *fmt, ...)
 {
+	char tmstr[29];
 	struct tm tm;
 	time_t t;
 
 	t = time(NULL);
 	tm = *localtime(&t);
+	strftime(tmstr, sizeof(tmstr), "%d/%b/%Y:%H:%M:%S %Z", &tm);
 
-	user_log(1, "[%d/%d/%d:%d:%d:%d %s] [error] [client %s] %s",
-			tm.tm_mday, tm.tm_mon, tm.tm_year+1900,
-			tm.tm_hour, tm.tm_min, tm.tm_sec,
-			tm.tm_zone,
-			cc->client_addr,
-			fmt);
+	user_log(1, "[%s] [error] [client %s] %s", tmstr,
+			cc->client_addr, fmt);
 }
 
 void
