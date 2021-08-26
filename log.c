@@ -222,12 +222,13 @@ open_twind_logs(void)
 		== -1)
 		fatalx("Cannot open error log: %s", _PATH_TWIND_ACCESS_LOG);
 
-	return;
+	log_debug("Log files open");
 }
 
 void
 close_twind_logs(void)
 {
+	log_debug("Closing log file");
 	close(access_fd);
 	close(error_fd);
 }
