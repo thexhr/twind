@@ -198,6 +198,8 @@ organize_termination(void)
 				fatalx("wait");
 			}
 		}
+
+		log_debug("Child %d terminated", sub_pid);
 	}
 }
 
