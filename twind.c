@@ -405,7 +405,6 @@ main_request_handler(void *argp)
 			log_debug("Cannot get MIME type for %s", ext);
 	}
 
-	//user_log(0, "%s", finalpath);
 	log_access(cc, finalpath);
 
 	if (send_response(cc->ssl_peer, STATUS_SUCCESS, finalpath, mime) < 0) {
