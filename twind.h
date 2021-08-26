@@ -21,6 +21,8 @@
 
 #include <openssl/ssl.h>
 
+#include <signal.h>
+
 #define VERSION "2021.a"
 #define MAXREQLEN 1025
 #define _PATH_TWIND_ACCESS_LOG "logs/access.log"
@@ -51,6 +53,8 @@ struct client_connection {
 	SSL *ssl_peer;
 	char client_addr[INET6_ADDRSTRLEN];
 };
+
+static volatile sig_atomic_t reload_log_files = 0;
 
 /* gemini.c */
 int check_gemini_file(const char *);

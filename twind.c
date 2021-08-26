@@ -92,6 +92,9 @@ static void
 signal_handler(int signal)
 {
 	switch (signal) {
+		case SIGHUP:
+			reload_log_files = 1;
+			break;
 		case SIGINT:
 		case SIGTERM:
 			organize_termination();
@@ -145,6 +148,8 @@ main(int argc, char *argv[])
 	if (signal(SIGINT, signal_handler) == SIG_ERR)
 		fatalx("signal");
 	if (signal(SIGTERM, signal_handler) == SIG_ERR)
+		fatalx("signal");
+	if (signal(SIGHUP, signal_handler) == SIG_ERR)
 		fatalx("signal");
 
 	open_sockets(tcpsock, port);
@@ -252,6 +257,13 @@ handle_incoming_connections(int counter, int tcpsock, SSL_CTX *sslctx)
 	memset(str, 0, sizeof(str));
 
 	while (1) {
+		if (reload_log_files == 1) {
+				reload_log_files = 0;
+				log_debug("Re-open log files");
+				close_twind_logs();
+				open_twind_logs();
+		}
+
 		ret = accept(tcpsock, (struct sockaddr *)&addr, &len);
 		if (ret < 0)
 			fatalx("Error when accepting connection");
