@@ -1,7 +1,6 @@
-/*	$OpenBSD: log.c,v 1.1 2018/07/10 16:39:54 florian Exp $	*/
-
 /*
  * Copyright (c) 2003, 2004 Henning Brauer <henning@openbsd.org>
+ * Copyright (c) 2021 Matthias Schmidt <xhr@giessen.ccc.de>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
