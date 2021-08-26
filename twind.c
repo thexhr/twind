@@ -344,6 +344,8 @@ fork_main_process(int tcpsock[2], SSL_CTX *sslctx)
 	pid_t pid;
 	int i;
 
+	setproctitle("main");
+
 	/* Fork two main handler processes, one for IPv4, one for IPv6 */
 	for (i=0; i < 2; i++) {
 		if (tcpsock[i] == -1)
