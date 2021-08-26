@@ -243,7 +243,10 @@ log_access(const struct client_connection *cc, const char *fmt, ...)
 	t = time(NULL);
 	tm = *localtime(&t);
 
-	strftime(tmstr, sizeof(tmstr), "%d/%b/%Y:%H:%M:%S %Z", &tm);
+	if (strftime(tmstr, sizeof(tmstr), "%d/%b/%Y:%H:%M:%S %Z", &tm) == 0) {
+		log_warn("strftime couldn't save time string");
+		return;
+	}
 
 	user_log(0, "%s - - [%s] %s", cc->client_addr, tmstr, fmt);
 }
@@ -257,7 +260,10 @@ log_error(const struct client_connection *cc, const char *fmt, ...)
 
 	t = time(NULL);
 	tm = *localtime(&t);
-	strftime(tmstr, sizeof(tmstr), "%d/%b/%Y:%H:%M:%S %Z", &tm);
+	if (strftime(tmstr, sizeof(tmstr), "%d/%b/%Y:%H:%M:%S %Z", &tm) == 0) {
+		log_warn("strftime couldn't save time string");
+		return;
+	}
 
 	user_log(1, "[%s] [error] [client %s] %s", tmstr,
 			cc->client_addr, fmt);
