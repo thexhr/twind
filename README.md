@@ -1,5 +1,4 @@
-twind
-=====
+# twind
 
 twind is a simple daemon serving static files over the gemini protocol.  It is
 intended to have as few knobs as possible and has no support for a
@@ -15,8 +14,7 @@ twind is known to run on OpenBSD, FreeBSD and Linux and currently supports
 It doesn't support CGI handling and probably never will.  There are more
 advanced gemini servers out there if you look for fancy stuff.
 
-Installation
-------------
+## Installation
 
 twind is written in plain C and you need to have the following software
 installed:
@@ -32,12 +30,13 @@ the user's name and the directory twind needs!  By default, the user ID for
 _twind is set to 4000.  If you need another user ID, change the UID variable
 in the Makefile.
 
+```
 $ make
 # make install
 # make user
+```
 
-TLS certificates
-----------------
+### TLS certificates
 
 twind expects to find a X509 certificate and a corresponding private key
 under the following locations (which cannot be changed):
@@ -51,32 +50,36 @@ key without warning!  To generate both key and certificate use the following
 command and provide the hostname via the HN variable.  If you don't provide the
 hostname the command will fail!
 
+```
 # make setuptls HN=example.com
+```
 
-Usage
------
+## Usage
 
 twind has support for virtual hosts.  If your gemini server is called
-example.com you have to create a dedicated sub directory under /var/twind:
+example.com you have to create a dedicated sub directory under `/var/twind`:
 
+```
 # cd /var/twind
 # mkdir example.com
 # <copy files into the example.com directory>
+```
 
 In case your server is also reachable via gemini.example.com and you want to
 serve the same content as on example.com you can create a symlink.  In case you
 want to serve different content, you have to create a dedicated sub directory.
 
 twind needs root permissions to start and will drop its privileges as soon as
-possible.  It will also chroot to /var/twind.
+possible.  It will also chroot to `/var/twind`.
 
+```
 # twind
+```
 
 For debugging purposes, you can start twind with -df option so that debugging
 and running in the foreground is enabled.
 
-Contact
--------
+## Contact
 
 Please send feedback, patches by email to git()xosc.org.  Send git formatted
 patches, see https://git-send-email.io/ for more information.
