@@ -18,8 +18,8 @@ INSTALL ?= install -p
 PREFIX ?= /usr/local
 SBIN ?= $(PREFIX)/sbin
 MAN ?= $(PREFIX)/man
-GEMINIDIR ?= /var/twind
-CONFDIR ?= /etc/twind
+GEMINIDIR ?= $(DESTDIR)/var/twind
+CONFDIR ?= $(DESTDIR)/etc/twind
 
 UID = 4000
 
@@ -30,8 +30,8 @@ install: all
 	$(INSTALL) -d -m 750 -o root $(CONFDIR)
 	$(INSTALL) -d -m 755 -o root $(GEMINIDIR)
 	$(INSTALL) -d -m 755 -o _twind -g _twind $(GEMINIDIR)/logs
-	$(INSTALL) -m 644 -o root twind.8 $(MAN)/man8
-	$(INSTALL) -m 755 -o root twind $(SBIN)
+	$(INSTALL) -m 644 -o root $(BIN).8 $(DESTDIR)$(MAN)/man8
+	$(INSTALL) -m 755 -o root $(BIN) $(DESTDIR)$(SBIN)
 
 user:
 	@useradd -d $(GEMINIDIR) -s /sbin/nologin -u $(UID) _twind
