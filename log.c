@@ -196,7 +196,7 @@ fatal(const char *emsg, ...)
 	va_start(ap, emsg);
 	vfatalc(errno, emsg, ap);
 	va_end(ap);
-	exit(1);
+	exit(-1);
 }
 
 void
@@ -207,7 +207,7 @@ fatalx(const char *emsg, ...)
 	va_start(ap, emsg);
 	vfatalc(0, emsg, ap);
 	va_end(ap);
-	exit(1);
+	exit(-1);
 }
 
 void
