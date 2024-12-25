@@ -18,26 +18,25 @@ INSTALL ?= install -p
 PREFIX ?= /usr/local
 SBIN ?= $(PREFIX)/sbin
 MAN ?= $(PREFIX)/man
-GEMINIDIR ?= $(DESTDIR)/var/twind
-CONFDIR ?= $(DESTDIR)/etc/twind
+GEMINIDIR ?= /var/twind
+CONFDIR ?= /etc/twind
 
 UID = 4000
 
 all: $(BIN)
 
 install: all
-	$(INSTALL) -d -m 755 -o root $(MAN)/man8
-	$(INSTALL) -d -m 750 -o root $(CONFDIR)
-	$(INSTALL) -d -m 755 -o root $(GEMINIDIR)
-	$(INSTALL) -d -m 755 -o _twind -g _twind $(GEMINIDIR)/logs
-	$(INSTALL) -m 644 -o root $(BIN).8 $(DESTDIR)$(MAN)/man8
-	$(INSTALL) -m 755 -o root $(BIN) $(DESTDIR)$(SBIN)
+	$(INSTALL) -D -m 644 -o root $(BIN).8 $(DESTDIR)$(MAN)/man8/$(BIN).8
+	$(INSTALL) -D -m 755 -o root $(BIN) $(DESTDIR)$(SBIN)/$(BIN)
+	$(INSTALL) -d -m 750 -o root $(DESTDIR)$(CONFDIR)
+	$(INSTALL) -d -m 755 -o root $(DESTDIR)$(GEMINIDIR)
+	$(INSTALL) -d -m 755 -o _twind -g _twind $(DESTDIR)$(GEMINIDIR)/logs
 
 user:
-	@useradd -d $(GEMINIDIR) -s /sbin/nologin -u $(UID) _twind
+	@useradd -d $(DESTDIR)$(GEMINIDIR) -s /sbin/nologin -u $(UID) _twind
 
 setuptls:
-	@openssl req -x509 -newkey rsa:4096 -sha256 -days 365 -nodes -keyout $(CONFDIR)/twind.key.pem -new -subj /CN=$(HN) -out $(CONFDIR)/twind.cert.pem -addext subjectAltName=DNS:$(HN)
+	@openssl req -x509 -newkey rsa:4096 -sha256 -days 365 -nodes -keyout $(DESTDIR)$(CONFDIR)/twind.key.pem -new -subj /CN=$(HN) -out $(DESTDIR)$(CONFDIR)/twind.cert.pem -addext subjectAltName=DNS:$(HN)
 
 $(BIN): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LDADD)
