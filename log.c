@@ -228,8 +228,10 @@ void
 close_twind_logs(void)
 {
 	log_debug("Closing log file");
-	close(access_fd);
-	close(error_fd);
+	if (close(access_fd) == -1)
+		log_debug("Error closing access log: %s", strerror(errno));
+	if (close(error_fd) == -1)
+		log_debug("Error closing error log: %s", strerror(errno));
 }
 
 void
