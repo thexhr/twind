@@ -20,6 +20,7 @@ SBIN ?= $(PREFIX)/sbin
 MAN ?= $(PREFIX)/man
 GEMINIDIR ?= /var/twind
 CONFDIR ?= /etc/twind
+HN ?= gemini.example.com
 
 UID = 4000
 
