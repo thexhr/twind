@@ -213,7 +213,6 @@ wait_for_children_to_terminate(void)
 		if (sub_pid == -1) {
 			if (errno == ECHILD) {
 				/* All sub processes are terminated */
-				close_twind_logs();
 				remove_pid_file();
 				log_debug("twind turns to dust");
 				exit(0);
