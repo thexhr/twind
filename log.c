@@ -215,11 +215,11 @@ open_twind_logs(void)
 {
 	if ((access_fd = open(_PATH_TWIND_ACCESS_LOG, O_WRONLY|O_APPEND|O_CREAT, 0644))
 		== -1)
-		fatalx("Cannot open access log: %s", _PATH_TWIND_ACCESS_LOG);
+		fatalx("Cannot open access log: %s: %s", _PATH_TWIND_ACCESS_LOG, strerror(errno));
 
 	if ((error_fd = open(_PATH_TWIND_ERROR_LOG, O_WRONLY|O_APPEND|O_CREAT, 0644))
 		== -1)
-		fatalx("Cannot open error log: %s", _PATH_TWIND_ACCESS_LOG);
+		fatalx("Cannot open error log: %s: %s", _PATH_TWIND_ACCESS_LOG, strerror(errno));
 
 	log_debug("Log files open");
 }
