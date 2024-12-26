@@ -63,6 +63,7 @@
 #define _PATH_TWIND_PID_CHROOT "/var/twind/twind.pid"
 #define _PATH_TWIND_PID "twind.pid"
 
+static void remove_pid_file(void);
 static void wait_for_children_to_terminate(void);
 static void child_terminate(void);
 static void open_sockets(int[2], int);
@@ -517,6 +518,18 @@ open_sockets(int tcpsock[2], int port)
 	}
 }
 
+void
+remove_pid_file(void)
+{
+	char pid_path[MAXREQLEN];
+
+	snprintf(pid_path, MAXREQLEN, "/logs/%s", _PATH_TWIND_PID);
+
+	if (unlink(pid_path) == -1) {
+		log_debug("Cannot remove pid file %s: %s\n", pid_path, strerror(errno));
+	}
+}
+
 int
 open_pid_file(void)
 {
@@ -542,6 +555,15 @@ open_pid_file(void)
 	snprintf(buf, PID_BUF_SIZE, "%ld\n", (long) getpid());
 	if (write(fd, buf, strlen(buf)) != (ssize_t)strlen(buf))
 		fatalx("Cannot write PID file");
+
+	struct passwd *pw = getpwnam(TWIND_USER);
+	if (pw == NULL) {
+		fatalx("Failed to get user info for twind user");
+	}
+
+	if (chown(pid_path, pw->pw_uid, pw->pw_gid) != 0) {
+		fatalx("Failed to change ownership of pid file");
+	}
 
 	return fd;
 }
