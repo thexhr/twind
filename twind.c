@@ -200,8 +200,6 @@ wait_for_children_to_terminate(void)
 {
 	pid_t sub_pid;
 
-	close_twind_logs();
-
 	log_debug("main (%d) waiting for sub processes to terminate", getpid());
 	for (;;) {
 		sub_pid = wait(NULL);
@@ -209,6 +207,7 @@ wait_for_children_to_terminate(void)
 			if (errno == ECHILD) {
 				/* All sub processes are terminated */
 				remove_pid_file();
+				close_twind_logs();
 				log_debug("twind turns to dust");
 				exit(0);
 			} else {
