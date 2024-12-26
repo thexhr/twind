@@ -18,6 +18,7 @@
 
 #include <sys/file.h>
 #include <sys/queue.h>
+#include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/syslog.h>
 #include <sys/types.h>
@@ -62,7 +63,8 @@
 #define _PATH_TWIND_PID_CHROOT "/var/twind/twind.pid"
 #define _PATH_TWIND_PID "twind.pid"
 
-static void organize_termination(void);
+static void wait_for_children_to_terminate(void);
+static void child_terminate(void);
 static void open_sockets(int[2], int);
 void *get_in_addr(struct sockaddr *);
 void* main_request_handler(void*);
@@ -97,7 +99,20 @@ signal_handler(int signal)
 			break;
 		case SIGINT:
 		case SIGTERM:
-			organize_termination();
+			wait_for_children_to_terminate();
+			break;
+		default:
+			fatalx("Unknown signal");
+	}
+}
+
+static void
+child_signal_handler(int signal)
+{
+	switch (signal) {
+		case SIGINT:
+		case SIGTERM:
+			child_terminate();
 			break;
 		default:
 			fatalx("Unknown signal");
@@ -175,13 +190,13 @@ main(int argc, char *argv[])
 
 	fork_main_process(tcpsock, sslctx);
 
-	organize_termination();
+	wait_for_children_to_terminate();
 
 	return 0;
 }
 
 static void
-organize_termination(void)
+wait_for_children_to_terminate(void)
 {
 	pid_t sub_pid;
 
@@ -192,13 +207,14 @@ organize_termination(void)
 		fatalx("pledge");
 #endif /* __OpenBSD__ */
 
-	log_debug("waiting for sub processes to terminate");
+	log_debug("main (%d) waiting for sub processes to terminate", getpid());
 	for (;;) {
 		sub_pid = wait(NULL);
 		if (sub_pid == -1) {
 			if (errno == ECHILD) {
 				/* All sub processes are terminated */
 				close_twind_logs();
+				remove_pid_file();
 				log_debug("twind turns to dust");
 				exit(0);
 			} else {
@@ -208,6 +224,13 @@ organize_termination(void)
 
 		log_debug("Child %d terminated", sub_pid);
 	}
+}
+
+static void
+child_terminate(void)
+{
+	log_debug("End child %d", getpid());
+	_exit(1);
 }
 
 SSL_CTX*
@@ -263,6 +286,11 @@ handle_incoming_connections(int counter, int tcpsock, SSL_CTX *sslctx)
 	if (pledge("stdio inet dns rpath wpath cpath", NULL) == -1)
 		fatalx("pledge");
 #endif /* __OpenBSD__ */
+
+	if (signal(SIGINT, child_signal_handler) == SIG_ERR)
+		fatalx("signal");
+	if (signal(SIGTERM, child_signal_handler) == SIG_ERR)
+		fatalx("signal");
 
 	memset(str, 0, sizeof(str));
 
