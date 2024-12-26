@@ -202,11 +202,6 @@ wait_for_children_to_terminate(void)
 
 	close_twind_logs();
 
-#ifdef __OpenBSD__
-	if (pledge("stdio", NULL) == -1)
-		fatalx("pledge");
-#endif /* __OpenBSD__ */
-
 	log_debug("main (%d) waiting for sub processes to terminate", getpid());
 	for (;;) {
 		sub_pid = wait(NULL);
