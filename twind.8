@@ -14,7 +14,7 @@
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
 .\"
-.Dd August 25, 2021
+.Dd December 26, 2024
 .Dt TWIND 8
 .Os
 .Sh NAME
@@ -22,7 +22,7 @@
 .Nd Simple gemini server
 .Sh SYNOPSIS
 .Nm twind
-.Op Fl dfV
+.Op Fl dfvV
 .Op Fl p Ar port
 .Sh DESCRIPTION
 .Nm
@@ -46,6 +46,12 @@ will run in the foreground and log to
 Listen on Port
 .Ar port
 instead of the default 1965.
+.It Fl v
+Be more verbose.
+Useful together with
+.Fl d
+and
+.Fl f .
 .It Fl V
 Display the version and exit.
 .El
