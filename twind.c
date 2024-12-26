@@ -201,6 +201,12 @@ wait_for_children_to_terminate(void)
 {
 	pid_t sub_pid;
 
+#ifdef __OpenBSD__
+	/* stdio and cpath still needed to close log files and remove the PID file */
+	if (pledge("stdio cpath", NULL) == -1)
+		fatalx("pledge");
+#endif /* __OpenBSD__ */
+
 	log_debug("main (%d) waiting for sub processes to terminate", getpid());
 	for (;;) {
 		sub_pid = wait(NULL);
