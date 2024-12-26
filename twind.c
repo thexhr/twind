@@ -524,7 +524,7 @@ open_pid_file(void)
 	char pid_path[MAXREQLEN];
 	int fd;
 
-	snprintf(pid_path, MAXREQLEN, "%s/%s",
+	snprintf(pid_path, MAXREQLEN, "%s/logs/%s",
 		_PATH_TWIND_CHROOT, _PATH_TWIND_PID);
 	if ((fd = open(pid_path, O_CREAT|O_RDWR, 0600)) == -1)
 		fatalx("Cannot open PID file");
