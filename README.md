@@ -20,9 +20,28 @@ twind is written in plain C and you need to have the following software
 installed:
 
 * A C compiler (tested with clang >= 11 and GCC >= 9)
-* LibreSSL or OpenSSL
+* LibreSSL or OpenSSL including development headers
 * POSIX compatible libc with pthreads support
 * make (both BSD and GNU make will work)
+
+### Dependencies
+
+Install the dependencies as follows:
+
+| Operating System | Commands and Notes |
+| --- | --- |
+| Alpine Linux | `apk add make gcc shadow bsd-compat-headers openssl openssl-dev musl-dev` |
+| Arch Linux | `pacman -Syu gcc make openssl` |
+| Debian Linux| `apt install make gcc openssl libssl-dev` |
+| DragonFly BSD | `pkg install libressl-devel` |
+| Fedora Linux | `dnf install openssl openssl-devel` |
+| FreeBSD | No additional dependencies needed |
+| OpenBSD | No additional dependencies needed |
+| Ubuntu Linux| `apt install make gcc openssl libssl-dev` |
+| Void Linux| `xbps-install gcc make openssl-devel` |
+| Windows | There is no native version, just use WSL |
+
+If your operating system does not have `pkg-config` installed by default, you have to install it as well.
 
 twind needs a dedicated user called '_twind' and directory to run.  The
 Makefile contains a command to create the user.  Note that you shall not change
