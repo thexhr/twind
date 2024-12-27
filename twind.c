@@ -60,7 +60,7 @@
 #define _PATH_TWIND_LOGS "/var/twind/logs"
 #define _PATH_TWIND_CERT "/etc/twind/twind.cert.pem"
 #define _PATH_TWIND_KEY "/etc/twind/twind.key.pem"
-#define _PATH_TWIND_PID_CHROOT "/var/twind/twind.pid"
+#define _PATH_TWIND_PID_CHROOT "/var/twind/logs/twind.pid"
 #define _PATH_TWIND_PID "twind.pid"
 
 static void remove_pid_file(void);
