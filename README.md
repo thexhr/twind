@@ -98,7 +98,6 @@ possible.  It will also chroot to `/var/twind`.
 For debugging purposes, you can start twind with -df option so that debugging
 and running in the foreground is enabled.
 
-## Contact
+## License
 
-Please send feedback, patches by email to git()xosc.org.  Send git formatted
-patches, see https://git-send-email.io/ for more information.
+twind was written by Matthias Schmidt and is released under the ISC license.
