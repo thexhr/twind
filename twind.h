@@ -23,7 +23,7 @@
 
 #include <signal.h>
 
-#define VERSION "2021.a"
+#define VERSION "2024.a"
 #define MAXREQLEN 1025
 #define _PATH_TWIND_ACCESS_LOG "logs/access.log"
 #define _PATH_TWIND_ERROR_LOG "logs/error.log"
